@@ -66,3 +66,6 @@ gem 'bootstrap', '~>4.0.0'
 
 # Load environment variables
 gem 'dotenv-rails', :groups => [:development, :test, :production]
+
+# Octokit client manager for authentication and user info retrieval
+gem "octokit", "~> 4.0"
