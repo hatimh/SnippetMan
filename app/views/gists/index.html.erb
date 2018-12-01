@@ -1,0 +1,20 @@
+<%= render 'layouts/inner_content' do %>
+  <table class="table my-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Url</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @gists.each_with_index do |gist, index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td>
+          <%= link_to gist.html_url, gist.html_url, target: :_blank %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

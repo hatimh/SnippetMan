@@ -1,30 +1,13 @@
 require 'octokit'
 
 class UsersController < ApplicationController
-  helper_method :authenticated?
-  
-  def authenticated?
-    session[:access_token]
-  end
-
   def index
     if authenticated?
-      client = Octokit::Client.new(
-        :client_id => ENV['CLIENT_ID'],
-        :client_secret => ENV['CLIENT_SECRET']
-      )
+      client = get_client
 
-      valid = client.check_application_authorization(session[:access_token])
-
-      if (!valid)
-        return
+      if client
+        @name = client.user.name
       end
-
-      client = Octokit::Client.new(
-        :access_token => session[:access_token]
-      )
-
-      @name = client.user.name
     end
   end
 

@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get '/callback', to: 'users#callback'
   get '/authenticate', to: 'users#authenticate'
   get '/logout', to: 'users#logout'
+
+  resources :gists
 end

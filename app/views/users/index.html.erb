@@ -1,5 +1,7 @@
-<%if @name%>
-  <h1>Welcome <%= @name.titleize %></h1>
+<%if authenticated? %>
+  <%= render 'layouts/inner_content' do %>
+    <h6 class="p-2">Welcome <%= @name.titleize %></h6>
+  <% end %>
 <%else%>
   <div class="container">
     <div class="row">
