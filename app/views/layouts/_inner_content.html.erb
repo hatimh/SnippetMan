@@ -8,6 +8,13 @@
         <li class="nav-item">
           <%= link_to "Private Gists", gists_path, class: "nav-link #{current_page?('/gists') ? 'active': ''}" %>
         </li>
+        <li class="nav-item">
+          <%=
+            link_to "Create Private Gist",
+            new_gist_path,
+            class: "nav-link #{current_page?('/gists/new') || @path === '/gists/new' ? 'active': ''}"
+          %>
+        </li>
       </ul>
       <%= yield %>
     </div>

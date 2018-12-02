@@ -1,9 +1,10 @@
 <%= render 'layouts/inner_content' do %>
   <table class="table my-4">
-    <thead>
+    <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Url</th>
+        <th scope="col">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -11,7 +12,10 @@
       <tr>
         <th scope="row"><%= index+1 %></th>
         <td>
-          <%= link_to gist.html_url, gist.html_url, target: :_blank %>
+          <%= link_to 'Link', gist.html_url, target: :_blank %>
+        </td>
+        <td>
+          <%= gist.description %>
         </td>
       </tr>
       <% end %>
