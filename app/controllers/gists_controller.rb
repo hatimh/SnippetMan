@@ -37,12 +37,17 @@ class GistsController < ApplicationController
 
     if @gist.valid?
 
-      @client.create_gist({
-        :description => @gist.description,
-        :public => @gist.public,
-        :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
-      })
+      begin
+        @client.create_gist({
+          :description => @gist.description,
+          :public => @gist.public,
+          :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
+        })
+      rescue
+        flash[:error] = 'There was an error creating a new gist.'
+      end
 
+      byebug
       redirect_to action: 'index'
       return
     end
@@ -60,13 +65,17 @@ class GistsController < ApplicationController
 
       if !gist.blank? && @gist.valid?
 
-        @client.edit_gist(gist.id, {
-          :description => @gist.description,
-          :public => @gist.public,
-          :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
-        })
+        begin
+          @client.edit_gist(gist.id, {
+            :description => @gist.description,
+            :public => @gist.public,
+            :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
+          })
+        rescue
+          flash[:error] = 'There was an error editing the gist.'
+        end
 
-        redirect_to action: 'index'
+        redirect_to action: 'index', :flash => flash
         return
       end
     end
@@ -75,6 +84,20 @@ class GistsController < ApplicationController
   end
 
   def destroy
+    id = params[:id]
+    gist = @client.gist(id)
+
+    if gist
+      deleted = @client.delete_gist(gist.id)
+      
+      if !deleted.blank?
+        flash.now[:error] = 'There was an error deleting the gist. Ensure you have sufficient permissions.'
+      end
+    else
+      flash.now[:error] = 'Gist with provided Id was not found.'
+    end
+
+    redirect_to action: 'index'
   end
 
   private
