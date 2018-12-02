@@ -8,6 +8,7 @@ class GistsController < ApplicationController
   end
 
   def show
+    render 
   end
 
   def new
@@ -16,6 +17,23 @@ class GistsController < ApplicationController
   end
 
   def edit
+    id = params[:id]
+
+    if !id.blank?
+      gist = @client.gist(id)
+
+      if gist
+        @gist = Gist.new(
+          :description => gist.description,
+          :public => gist.public,
+          :files => gist.files.fields.map { |key| { name: key, content: gist.files[key][:content] }}
+        )
+
+        @gist.id = gist.id
+        
+        @submit_label = 'Edit Gist'
+      end
+    end
   end
 
   def create
@@ -38,6 +56,26 @@ class GistsController < ApplicationController
   end
 
   def update
+    id = params[:id]
+
+    if id
+      @gist = Gist.new(gist_params)
+      gist = @client.gist(id)
+
+      if !gist.blank? && @gist.valid?
+
+        @client.edit_gist(gist.id, {
+          :description => @gist.description,
+          :public => @gist.public,
+          :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
+        })
+
+        redirect_to action: 'index'
+        return
+      end
+    end
+
+    render :edit
   end
 
   def destroy

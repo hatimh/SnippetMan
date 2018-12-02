@@ -5,6 +5,7 @@
         <th scope="col">#</th>
         <th scope="col">Url</th>
         <th scope="col">Description</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,9 @@
         </td>
         <td>
           <%= gist.description %>
+        </td>
+        <td>
+          <%= link_to 'Edit', edit_gist_path(id: gist.id), class: "btn btn-sm btn-outline-info" %>
         </td>
       </tr>
       <% end %>
