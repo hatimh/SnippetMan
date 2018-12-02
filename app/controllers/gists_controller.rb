@@ -11,18 +11,34 @@ class GistsController < ApplicationController
   end
 
   def new
+    @gist = Gist.new
+    @submit_label = 'Create Gist'
   end
 
   def edit
   end
 
   def create
-  end
+    @gist = Gist.new(gist_params)
 
+    if @gist.valid?
+
+      @client.create_gist({
+        :description => @gist.description,
+        :public => @gist.public,
+        :files => Hash[@gist.files.map { |file| [file[:name], { content: file[:content] }] }]
+      })
+
+      redirect_to action: 'index'
+      return
+    end
+
+    @path = '/gists/new'
+    render :new
+  end
 
   def update
   end
-
 
   def destroy
   end
@@ -39,5 +55,9 @@ class GistsController < ApplicationController
       end
       
       redirect_to root_path
+    end
+
+    def gist_params
+      params.require(:gist).permit(:description, :files => [ :name, :content ])
     end
 end

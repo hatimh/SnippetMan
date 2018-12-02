@@ -1,0 +1,48 @@
+<%= form_for @gist, :html => { :class => 'gist-form my-4' } do |f| %>
+  <% if @gist.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      Please correct errors below and try to again.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+  <div class="form-group my-4 p-y2">
+  <%= f.text_field :description, :class => "form-control col-sm-12 col-md-6", :placeholder => 'Gist description' %>
+    <% if !@gist.errors[:description].blank? %>
+      <small class="text-sm text-danger float-left mb-2">
+        Please provide a description.
+      </small>
+    <% end %>
+  </div>
+  <div class="files-container">
+    <% if @gist.files.size > 0 %>
+      <% @gist.files.each_with_index do |file, index|%>
+        <div class="form-group my-4" id="file-<%= index %>">
+          <%= text_field_tag '[gist]files[][name]', file[:name], :class => 'form-control my-2', :placeholder => 'File name with extension' %>
+          <%= text_area_tag '[gist]files[][content]', file[:content], :class => 'form-control my-2', :placeholder => 'Code', :rows => 5 %>
+          <button class="delete-file-button btn btn-sm float-right btn-danger mb-4" type="button">
+            Delete File
+          </button>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="form-group my-4">
+        <%= text_field_tag '[gist]files[][name]', '', :class => 'form-control my-2', :placeholder => 'File name with extension' %>
+        <%= text_area_tag '[gist]files[][content]', '', :class => 'form-control my-2', :placeholder => 'Code', :rows => 5 %>
+        <button class="delete-file-button btn btn-sm float-right btn-danger mb-4" type="button">
+          Delete File
+        </button>
+      </div>
+    <% end %>
+  </div>
+  <% if !@gist.errors[:files].blank? %>
+    <small class="text-left my-2 text-danger d-block">
+      Atleast one file with name and code content is required.
+    </small>
+  <% end %>
+  <button type="button" class="add-file-button btn btn-info btn-sm float-left">
+    Add File
+  </button>
+  <%= f.submit @submit_label, :class => 'btn btn-primary' %>
+<% end %>
