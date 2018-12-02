@@ -1,10 +1,19 @@
 <%= render 'layouts/inner_content' do %>
-  <table class="table my-4">
+  <% if flash[:error] %>
+    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+      <%= flash[:error] %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+  <table class="gist-list table my-4">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Url</th>
         <th scope="col">Description</th>
+        <th scope="col"></th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -21,8 +30,17 @@
         <td>
           <%= link_to 'Edit', edit_gist_path(id: gist.id), class: "btn btn-sm btn-outline-info" %>
         </td>
+        <td>
+          <%= link_to 'Delete',
+            gist_path(id: gist.id),
+            method: 'delete',
+            class: "delete-gist-button btn btn-sm btn-outline-danger",
+            data: { toggle: 'modal', target: '#DeleteFileModal' }
+          %>
+        </td>
       </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
+<%= render 'delete_file_modal' %>
