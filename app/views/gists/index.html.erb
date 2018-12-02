@@ -7,49 +7,62 @@
       </button>
     </div>
   <% end %>
-  <div class="table-responsive">
-    <table class="gist-list table my-4">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Url</th>
-          <th scope="col">Description</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @gists.each_with_index do |gist, index| %>
-        <tr>
-          <th scope="row"><%= index+1 %></th>
-          <td>
-            <%= link_to 'Link', gist.html_url, target: :_blank %>
-          </td>
-          <td>
-            <%= gist.description %>
-          </td>
-          <td>
-            <%= link_to 'Edit', edit_gist_path(id: gist.id), class: "btn btn-sm btn-outline-info" %>
-          </td>
-          <td>
-            <%= link_to 'View history',
-              gist_path(id: gist.id),
-              class: "btn btn-sm btn-outline-secondary"
-            %>
-          </td>
-          <td>
-            <%= link_to 'Delete',
-              gist_path(id: gist.id),
-              method: 'delete',
-              class: "delete-gist-button btn btn-sm btn-outline-danger",
-              data: { toggle: 'modal', target: '#DeleteFileModal' }
-            %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="dropdown show mt-4 text-right">
+    <button class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filter
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+       <%= link_to 'All', gists_path, class: 'dropdown-item' %>
+       <%= link_to 'Starred', '/starred/gists', class: 'dropdown-item' %>
+    </div>
   </div>
+  <% if @gists.size > 0 %>
+    <div class="table-responsive">
+      <table class="gist-list table my-4">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Url</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @gists.each_with_index do |gist, index| %>
+          <tr>
+            <th scope="row"><%= index+1 %></th>
+            <td>
+              <%= link_to 'Link', gist.html_url, target: :_blank %>
+            </td>
+            <td>
+              <%= gist.description %>
+            </td>
+            <td>
+              <%= link_to 'Edit', edit_gist_path(id: gist.id), class: 'btn btn-sm btn-outline-info' %>
+            </td>
+            <td>
+              <%= link_to 'View history',
+                gist_path(id: gist.id),
+                class: 'btn btn-sm btn-outline-secondary'
+              %>
+            </td>
+            <td>
+              <%= link_to 'Delete',
+                gist_path(id: gist.id),
+                method: 'delete',
+                class: 'delete-gist-button btn btn-sm btn-outline-danger',
+                data: { toggle: 'modal', target: '#DeleteFileModal' }
+              %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <h6>No Gists Found</h6>  
+  <% end %>
 <% end %>
 <%= render 'delete_file_modal' %>
