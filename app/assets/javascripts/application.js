@@ -73,6 +73,49 @@ $(document).on('turbolinks:load', function() {
       })
     });
   }
+
+  var commitList = $('.commit-list');
+
+  if (commitList) {
+    commitList.on('click', '.view-commit-changes', function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      var VCCM = $('#ViewCommitChangesModal');
+      VCCM.modal('show');
+      var url = $(event.target).siblings('input').val();
+      VCCM.find('.modal-body').html('<p>Loading...</p>');
+
+      $.ajax({
+        url: url
+      }).done(function (data) {
+        var newContent = $('<div>');
+        var end = 0;
+
+        Object.keys(data.files).forEach(function (file) {
+          var fileNameInput = $('<input>')
+            .attr('type', 'text')
+            .attr('readonly', 'true')
+            .addClass('form-control my-2')
+            .val(data.files[file].filename);
+    
+          var fileContentInput = $('<textarea>')
+            .attr('readonly', 'true')
+            .attr('rows', 5)
+            .addClass('form-control my-2')
+            .val(data.files[file].content);
+    
+          var newFields = $('<div>')
+            .attr('id', 'file-' + (end++))
+            .addClass('form-group my-4')
+            .append(fileNameInput, fileContentInput);
+
+          newFields.appendTo(newContent);  
+        })
+
+        VCCM.find('.modal-body').html(newContent);
+      });
+    });
+  }
 });
 
 // Implement spinner - To do

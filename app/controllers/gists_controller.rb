@@ -8,6 +8,16 @@ class GistsController < ApplicationController
   end
 
   def show
+    id = params[:id]
+
+    begin
+      gist = @client.gist(id)
+      @description = gist.description
+      @url = gist.html_url
+      @commits = @client.gist_commits(id)
+    rescue
+      flash.now[:error] = 'No commits found matching provided gist Id.'
+    end
   end
 
   def new
