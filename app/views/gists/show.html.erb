@@ -1,1 +1,51 @@
 
+<%= render 'layouts/inner_content' do %>
+  <% if flash[:error] %>
+    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+      <%= flash[:error] %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+  <div class="gist-info mt-2 text-left">
+    Description: <%= @description %><br>
+    Url: <%= link_to @url, @url, target: :_blank %>
+  </div>
+  <div class="table-responsive">
+    <table class="commit-list table my-4">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Details</th>
+          <th scope="col">Change Stats</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @commits.each_with_index do |commit, index| %>
+        <tr>
+          <th scope="row"><%= index+1 %></th>
+          <td class="text-left">
+            Version: <%= commit.version %><br>
+            Committed At:  <%= commit.committed_at %>
+          </td>
+          <td>
+            Additions: <%= commit.change_status.additions %><br>
+            Deletions: <%= commit.change_status.deletions %><br>
+            Total:  <%= commit.change_status.total %>
+          </td>
+          <td>
+            <input type="hidden" value="<%= commit.url %>" id="<%= commit.version %>">
+            <%= link_to 'View Files',
+              '#',
+              class: "view-commit-changes btn btn-sm btn-outline-success"
+            %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+<%= render 'view_commit_changes_modal' %>
