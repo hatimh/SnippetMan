@@ -6,7 +6,7 @@ class Gist
   validates_presence_of :description
   validate :files_not_empty
 
-  def initialize(args = { description: '', files: [], persisted: false })
+  def initialize(args = { description: '', files: [] })
     @description = args[:description] || ''
     @files = args[:files] || []
     @public = false

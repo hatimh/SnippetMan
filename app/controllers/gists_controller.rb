@@ -8,12 +8,10 @@ class GistsController < ApplicationController
   end
 
   def show
-    render 
   end
 
   def new
     @gist = Gist.new
-    @submit_label = 'Create Gist'
   end
 
   def edit
@@ -30,8 +28,6 @@ class GistsController < ApplicationController
         )
 
         @gist.id = gist.id
-        
-        @submit_label = 'Edit Gist'
       end
     end
   end

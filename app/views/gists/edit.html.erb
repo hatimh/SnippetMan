@@ -1,6 +1,6 @@
 <%= render 'layouts/inner_content' do %>
   <% if @gist %>
-    <%= render 'single_gist_form', locals: { :action => 'update', :method => 'patch' } %>
+    <%= render 'single_gist_form', locals: { :action => 'update', :method => 'patch', :submit_label => 'Edit Gist' } %>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <strong>Note:</strong> Files missing name or code content will be skipped.
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
