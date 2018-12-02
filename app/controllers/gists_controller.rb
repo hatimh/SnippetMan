@@ -47,7 +47,6 @@ class GistsController < ApplicationController
         flash[:error] = 'There was an error creating a new gist.'
       end
 
-      byebug
       redirect_to action: 'index'
       return
     end

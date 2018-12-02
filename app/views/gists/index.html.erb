@@ -7,7 +7,7 @@
       </button>
     </div>
   <% end %>
-  <table class="table my-4">
+  <table class="gist-list table my-4">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
@@ -31,10 +31,16 @@
           <%= link_to 'Edit', edit_gist_path(id: gist.id), class: "btn btn-sm btn-outline-info" %>
         </td>
         <td>
-          <%= link_to 'Delete', gist_path(id: gist.id), method: 'delete', class: "btn btn-sm btn-outline-danger" %>
+          <%= link_to 'Delete',
+            gist_path(id: gist.id),
+            method: 'delete',
+            class: "delete-gist-button btn btn-sm btn-outline-danger",
+            data: { toggle: 'modal', target: '#DeleteFileModal' }
+          %>
         </td>
       </tr>
       <% end %>
     </tbody>
   </table>
 <% end %>
+<%= render 'delete_file_modal' %>

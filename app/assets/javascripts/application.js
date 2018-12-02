@@ -19,8 +19,6 @@
 
 
 $(document).on('turbolinks:load', function() {
-  
-
   var gistsForm = $('.gist-form');
 
   if (gistsForm) {
@@ -58,6 +56,22 @@ $(document).on('turbolinks:load', function() {
     gistsForm.on('click', '.delete-file-button', function (event) {
       $(event.target).closest('.form-group').remove();
     })
+  }
+
+  var gistList = $('.gist-list');
+
+  if (gistList) {
+    gistList.on('click', '.delete-gist-button', function(event){
+      event.preventDefault();
+      event.stopPropagation();
+
+      $('#DeleteFileModal').modal('show').one('click', '.delete-callback', function () {
+        $.ajax({
+          type: 'DELETE',
+          url: event.target.href
+        })
+      })
+    });
   }
 });
 
