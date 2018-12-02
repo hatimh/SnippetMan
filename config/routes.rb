@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get '/logout', to: 'users#logout'
 
   resources :gists
+
+  get 'starred/gists', to: 'gists#index_starred'
 end

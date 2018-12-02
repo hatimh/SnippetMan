@@ -6,7 +6,7 @@
           <%= link_to "Home", root_path, class: "nav-link #{current_page?('/') ? 'active': ''}" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Private Gists", gists_path, class: "nav-link #{current_page?('/gists') ? 'active': ''}" %>
+          <%= link_to "Private Gists", gists_path, class: "nav-link #{current_page?('/gists') || @path === '/gists' ? 'active': ''}" %>
         </li>
         <li class="nav-item">
           <%=

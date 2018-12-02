@@ -7,6 +7,15 @@ class GistsController < ApplicationController
     end
   end
 
+  def index_starred
+    if @client
+      @gists = @client.starred_gists.select { |gist| gist.public === false }
+    end
+
+    @path = '/gists'
+    render :index
+  end
+
   def show
     id = params[:id]
 
