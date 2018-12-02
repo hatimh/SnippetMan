@@ -1,4 +1,4 @@
-<%= form_for @gist, :html => { :class => 'gist-form my-4' } do |f| %>
+<%= form_for @gist, :url => {:action => locals[:action] }, :method => locals[:method] || 'post', :html => { :class => 'gist-form my-4', :id => "gist-#{locals[:action]}" } do |f| %>
   <% if @gist.errors.any? %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       Please correct errors below and try to again.
@@ -44,5 +44,5 @@
   <button type="button" class="add-file-button btn btn-info btn-sm float-left">
     Add File
   </button>
-  <%= f.submit @submit_label, :class => 'btn btn-primary' %>
+  <%= f.submit locals[:submit_label], :class => 'btn btn-primary' %>
 <% end %>

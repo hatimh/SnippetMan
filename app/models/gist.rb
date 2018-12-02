@@ -1,6 +1,6 @@
 class Gist
   include ActiveModel::Model, ActiveModel::Validations
-  attr_accessor :description, :files
+  attr_accessor :description, :files, :id
   attr_reader :public
 
   validates_presence_of :description
