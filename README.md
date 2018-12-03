@@ -1,24 +1,53 @@
-# README
+# SnippetMan
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An app to manage private gists
 
-Things you may want to cover:
+## Dependencies
 
-* Ruby version
+`Ruby 2.5.1`
 
-* System dependencies
+`Rails ~> 5.2.1`
 
-* Configuration
+## Getting started
 
-* Database creation
+run 
 
-* Database initialization
+```
+bundle install
+```
 
-* How to run the test suite
+Register for a new application to get client id and secret at [here](https://github.com/settings/applications/new)
 
-* Services (job queues, cache servers, search engines, etc.)
+create a .env file in project root and add the values provided. See example in [env](./env.example)
 
-* Deployment instructions
+### To run application in development
 
-* ...
+```
+bin/rails s
+```
+
+### To run application in production
+
+Compile assets
+```
+bin/rake assets:precompile
+```
+
+Ensure tests are passing
+```
+bin/rails test
+```
+
+Start server
+```
+bin/rails s -e production
+```
+
+Note: This project has set the static assets to be served from within the project and hence the following setting
+```
+config.public_file_server.enabled = true
+```
+in [`/config/environments/production.rb`](/config/environments/production.rb)
+
+This setting will probably change for deployment and serving assets from another CDN or webservers like Apache or NGINX and will require additional configurations.
+

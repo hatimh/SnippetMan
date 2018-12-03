@@ -119,11 +119,11 @@ $(document).on('turbolinks:load', function() {
   }
 });
 
-// Implement spinner - To do
-// $(document).on("turbolinks:request-start", function(){
-  
-// });
 
-// $(document).on("turbolinks:request-end", function(){
-  
-// });
+$(document).on("turbolinks:request-start", function(){
+  $('#Spinner').modal({ show: true });
+});
+
+$(document).on("turbolinks:request-end", function(){
+  $('#Spinner').modal({ show: false });
+});
