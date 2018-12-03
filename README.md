@@ -18,7 +18,7 @@ bundle install
 
 Register for a new application to get client id and secret at [here](https://github.com/settings/applications/new)
 
-create a .env file in project root and add the values provided. See example in [env](./env.example)
+create a .env file in project root and add the values provided. See example in [env](./.env.example)
 
 ### To run application in development
 
